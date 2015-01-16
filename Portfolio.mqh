@@ -67,16 +67,8 @@ class Portfolio
       
       bool HasTrade(string symbol, int operation)
       {
-         bool result = False;
-         for(int i = 0; i < Size(); i++)
-         {
-            Trade * trade = GetTrade(i);
-            if(trade.GetSymbol() == symbol && trade.GetOperation() == operation)
-            {
-               result = True;
-            }
-         }
-         return result;
+         Trade * dummy;
+         return TryGetTrade(symbol, operation, dummy);
       }
       
       bool TryGetTrade(string symbol, int operation, Trade *& outTrade)
