@@ -20,7 +20,7 @@ class BlackBoxTrader
          delete executionModel;
       }
       
-	   void OnTick()
+      void OnTick()
       {
          Portfolio * currentPortfolio = Portfolio::GetCurrent();
          Portfolio * newPortfolio = portfolioModel.ConstructPortfolio();
