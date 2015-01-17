@@ -71,8 +71,8 @@ class DefaultRiskModel : public RiskModel
    public:
       DefaultRiskModel(int stopLoss, int trailingStop)
       {
-         stopLoss = stopLoss;
-         trailingStop = trailingStop;
+         this.stopLoss = stopLoss;
+         this.trailingStop = trailingStop;
          if(Digits == 5 || Digits == 3 || Digits == 1)
          {
             P = 10;

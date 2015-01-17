@@ -8,7 +8,7 @@ class NoCostModel : public CostModel
    public:
       NoCostModel(int slippage)
       {
-         slippage = slippage;
+         this.slippage = slippage;
       }
       
       void AlterPortfolioBasedOnCosts(Portfolio * portfolio)

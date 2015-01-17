@@ -21,8 +21,8 @@ class SmaAlphaModel : public AlphaModel
    public:
       SmaAlphaModel(int shortPeriod, int longPeriod)
       {
-         shortPeriod = shortPeriod;
-         longPeriod = longPeriod;
+         this.shortPeriod = shortPeriod;
+         this.longPeriod = longPeriod;
       }
       
       Forecast * ForecastMarket()
