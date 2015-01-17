@@ -10,11 +10,11 @@ class ForexPortfolioModel : public PortfolioModel
          Portfolio * newPortfolio;
          Forecast * forecast = alphaModel.ForecastMarket();
          
-         Trade * currentTrade;
-         Trade * newTrade; //No block scope..?
          if(forecast.GetDirection() == dUP || forecast.GetDirection() == dDOWN)
          {
             newPortfolio = new Portfolio();
+            Trade * newTrade; //No block scope..?
+            Trade * currentTrade;
             if(currentPortfolio.TryGetTrade(Symbol(), (forecast.GetDirection() == dUP ? OP_SELL : OP_BUY), currentTrade))
             {
                newTrade = new Trade(currentTrade.GetSymbol(), currentTrade.GetOperation(), 0.0, currentTrade.GetTicket());
