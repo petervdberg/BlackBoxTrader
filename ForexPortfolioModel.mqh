@@ -20,11 +20,8 @@ class ForexPortfolioModel : public PortfolioModel
                newTrade = new Trade(currentTrade.GetSymbol(), currentTrade.GetOperation(), 0.0, currentTrade.GetTicket());
                newPortfolio.AddTrade(newTrade);               
             }
-            else
-            {
-               newTrade = new Trade(Symbol(), (forecast.GetDirection() == dUP ? OP_BUY : OP_SELL), 1.0);
-               newPortfolio.AddTrade(newTrade);
-            }
+            newTrade = new Trade(Symbol(), (forecast.GetDirection() == dUP ? OP_BUY : OP_SELL), 1.0);
+            newPortfolio.AddTrade(newTrade);
          }
          else
          {
