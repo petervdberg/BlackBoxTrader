@@ -19,10 +19,10 @@ class SmaAlphaModel : public AlphaModel
       }
 
    public:
-      SmaAlphaModel()
+      SmaAlphaModel(int shortPeriod, int longPeriod)
       {
-         shortPeriod = 10;
-         longPeriod = 40;
+         shortPeriod = shortPeriod;
+         longPeriod = longPeriod;
       }
       
       Forecast * ForecastMarket()

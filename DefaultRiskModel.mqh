@@ -69,10 +69,10 @@ class DefaultRiskModel : public RiskModel
       }
       
    public:
-      DefaultRiskModel()
+      DefaultRiskModel(int stopLoss, int trailingStop)
       {
-         stopLoss = 30;
-         trailingStop = 30;
+         stopLoss = stopLoss;
+         trailingStop = trailingStop;
          if(Digits == 5 || Digits == 3 || Digits == 1)
          {
             P = 10;

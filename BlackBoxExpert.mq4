@@ -9,9 +9,9 @@ BlackBoxTrader * trader;
 
 void OnInit()
 {
-   AlphaModel * alphaModel = new SmaAlphaModel();
-   RiskModel * riskModel = new DefaultRiskModel();
-   CostModel * costModel = new NoCostModel();
+   AlphaModel * alphaModel = new SmaAlphaModel(10, 40);
+   RiskModel * riskModel = new DefaultRiskModel(30, 30);
+   CostModel * costModel = new NoCostModel(3);
    PortfolioModel * portfolioModel = new ForexPortfolioModel(alphaModel, riskModel, costModel);
    ExecutionModel * executionModel = new ForexExecutionModel();
    trader = new BlackBoxTrader(portfolioModel, executionModel);

@@ -6,9 +6,9 @@ class NoCostModel : public CostModel
       int slippage;
       
    public:
-      NoCostModel()
+      NoCostModel(int slippage)
       {
-         slippage = 3;
+         slippage = slippage;
       }
       
       void AlterPortfolioBasedOnCosts(Portfolio * portfolio)
