@@ -3,34 +3,34 @@
 class RsiAlphaModel : public AlphaModel
 {
    private:
-      int shortPeriod;
-      int longPeriod;
+      int upperThreshold;
+      int lowerLowerThreshold;
       
-      bool RsiInSellZone()
+      bool RsiInUpperZone()
       {
-         return (iRSI(NULL,0,14,0,1) > 70 && iRSI(NULL,0,14,0,2) <= 70);
+         return (iRSI(NULL,0,14,0,1) > upperThreshold && iRSI(NULL,0,14,0,2) <= upperThreshold);
       }
       
-      bool RsiInBuyZone()
+      bool RsiInLowerZone()
       {
-         return (iRSI(NULL,0,14,0,1) < 30 && iRSI(NULL,0,14,0,2) >= 30);
+         return (iRSI(NULL,0,14,0,1) < lowerLowerThreshold && iRSI(NULL,0,14,0,2) >= lowerLowerThreshold);
       }
 
    public:
       RsiAlphaModel()
       {
-         shortPeriod = 10;
-         longPeriod = 40;
+         upperThreshold = 70;
+         lowerLowerThreshold = 30;
       }
       
       Forecast * ForecastMarket()
       {
          Direction direction;
-         if(RsiInBuyZone())
+         if(RsiInUpperZone())
          {
             direction = dUP;
          }
-         else if(RsiInSellZone())
+         else if(RsiInLowerZone())
          {
             direction = dDOWN;
          }

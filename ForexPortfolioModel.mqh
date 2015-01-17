@@ -12,27 +12,19 @@ class ForexPortfolioModel : public PortfolioModel
          
          Trade * currentTrade;
          Trade * newTrade; //No block scope..?
-         if(forecast.GetDirection() == dUP)
+         if(forecast.GetDirection() == dUP || forecast.GetDirection() == dDOWN)
          {
             newPortfolio = new Portfolio();
-            if(currentPortfolio.TryGetTrade(Symbol(), OP_SELL, currentTrade))
+            if(currentPortfolio.TryGetTrade(Symbol(), (forecast.GetDirection() == dUP ? OP_SELL : OP_BUY), currentTrade))
             {
                newTrade = new Trade(currentTrade.GetSymbol(), currentTrade.GetOperation(), 0.0, currentTrade.GetTicket());
-               newPortfolio.AddTrade(newTrade);
+               newPortfolio.AddTrade(newTrade);               
             }
-            newTrade = new Trade(Symbol(), OP_BUY, 1.0);
-            newPortfolio.AddTrade(newTrade);
-         }
-         else if(forecast.GetDirection() == dDOWN)
-         {
-            newPortfolio = new Portfolio();
-            if(currentPortfolio.TryGetTrade(Symbol(), OP_BUY, currentTrade))
+            else
             {
-               newTrade = new Trade(currentTrade.GetSymbol(), currentTrade.GetOperation(), 0.0, currentTrade.GetTicket());
+               newTrade = new Trade(Symbol(), (forecast.GetDirection() == dUP ? OP_BUY : OP_SELL), 1.0);
                newPortfolio.AddTrade(newTrade);
             }
-            newTrade = new Trade(Symbol(), OP_SELL, 1.0);
-            newPortfolio.AddTrade(newTrade);
          }
          else
          {
