@@ -3,7 +3,7 @@
 class AlphaModel
 {
    public:
-      virtual Forecast * ForecastMarket()
+      virtual Forecast * CreateForecast()
       {
          return NULL;
       }

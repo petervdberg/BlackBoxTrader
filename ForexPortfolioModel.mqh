@@ -8,7 +8,7 @@ class ForexPortfolioModel : public PortfolioModel
       Portfolio * CunstructPortfolioFromPrediction(Portfolio * currentPortfolio)
       {
          Portfolio * newPortfolio;
-         Forecast * forecast = alphaModel.ForecastMarket();
+         Forecast * forecast = alphaModel.CreateForecast();
          
          if(forecast.GetDirection() == dUP || forecast.GetDirection() == dDOWN)
          {

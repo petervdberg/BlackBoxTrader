@@ -25,7 +25,7 @@ class SmaAlphaModel : public AlphaModel
          this.longPeriod = longPeriod;
       }
       
-      Forecast * ForecastMarket()
+      Forecast * CreateForecast()
       {
          Direction direction;
          if(ShortCrossover())
