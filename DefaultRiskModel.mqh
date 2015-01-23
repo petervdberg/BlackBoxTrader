@@ -3,6 +3,8 @@
 class DefaultRiskModel : public RiskModel
 {
    private:
+      double risk;
+      bool isYenPair;
       int stopLoss;
       int trailingStop;
       int P; // What is this??
@@ -68,9 +70,23 @@ class DefaultRiskModel : public RiskModel
          }
       }
       
-   public:
-      DefaultRiskModel(int stopLoss, int trailingStop)
+      double GetVolumeBasedOnRisk()
       {
+         double pipValueOfInstrument = MarketInfo(Symbol(), MODE_LOTSIZE);
+         double stopLossInPips = stopLoss * P * Point;
+         double result = risk * AccountBalance() / (stopLossInPips * pipValueOfInstrument);
+         if(isYenPair) 
+         {
+            result *= 100;
+         }
+         
+         return NormalizeDouble(result, 2);      
+      }
+      
+   public:
+      DefaultRiskModel(double risk, int stopLoss, int trailingStop)
+      {
+         this.risk = risk;
          this.stopLoss = stopLoss;
          this.trailingStop = trailingStop;
          if(Digits == 5 || Digits == 3 || Digits == 1)
@@ -80,6 +96,14 @@ class DefaultRiskModel : public RiskModel
          else
          {
             P = 1; 
+         }
+         if(Digits == 3 || Digits == 2) 
+         {
+            isYenPair = true;
+         }
+         else
+         {
+            isYenPair = false;
          }
       }
 
@@ -97,6 +121,7 @@ class DefaultRiskModel : public RiskModel
             Trade * newTrade = newPortfolio.GetTrade(i);
             if(newTrade.GetVolume() > 0)
             {
+               newTrade.SetVolume(GetVolumeBasedOnRisk());
                int operation = newTrade.GetOperation();
                string symbol = newTrade.GetSymbol();
                Trade * currentTrade;

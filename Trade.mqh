@@ -38,6 +38,11 @@ class Trade
          return volume;
       }
       
+      void SetVolume(double value)
+      {
+         volume = value;
+      }
+      
       double GetStopLoss()
       {
          return stopLoss;

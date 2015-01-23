@@ -10,7 +10,7 @@ BlackBoxTrader * trader;
 void OnInit()
 {
    AlphaModel * alphaModel = new SmaAtrAlphaModel(10, 40, 20, 10);
-   RiskModel * riskModel = new DefaultRiskModel(30, 30);
+   RiskModel * riskModel = new DefaultRiskModel(0.01, 30, 30);
    CostModel * costModel = new DefaultCostModel(3);
    PortfolioModel * portfolioModel = new DirectionBasedPortfolioModel(alphaModel, riskModel, costModel);
    ExecutionModel * executionModel = new DefaultExecutionModel();

@@ -5,7 +5,7 @@ class DefaultExecutionModel : public ExecutionModel
    private:
       int P;
       
-      void OpenOrder(Trade * trade, int lotsNeeded)
+      void OpenOrder(Trade * trade, double lotsNeeded)
       {
          double openPrice = (trade.GetOperation() == OP_SELL ? Bid : Ask);
          OrderSend(Symbol(), trade.GetOperation(), lotsNeeded, openPrice, trade.GetSlippage(), trade.GetStopLoss(), trade.GetTakeProfit());
@@ -15,7 +15,7 @@ class DefaultExecutionModel : public ExecutionModel
       {
          OrderModify(trade.GetTicket(), trade.GetOpenPrice(), trade.GetStopLoss(), trade.GetTakeProfit(), 0);
       }
-      void CloseOrder(Trade * trade, int lotsToSell)
+      void CloseOrder(Trade * trade, double lotsToSell)
       {
          double closePrice = (trade.GetOperation() == OP_SELL ? Ask : Bid);
          OrderClose(trade.GetTicket(), lotsToSell, closePrice, trade.GetSlippage());
@@ -44,7 +44,7 @@ class DefaultExecutionModel : public ExecutionModel
             if(currentPortfolio.TryGetTrade(newTrade.GetSymbol(), newTrade.GetOperation(), currentTrade))
             {
                orderExists = True;
-               int lotsNeeded = newTrade.GetVolume() - currentTrade.GetVolume();
+               double lotsNeeded = newTrade.GetVolume() - currentTrade.GetVolume();
                if(lotsNeeded < 0)
                {
                   CloseOrder(newTrade, -lotsNeeded);
