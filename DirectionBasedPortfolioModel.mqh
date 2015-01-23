@@ -1,6 +1,6 @@
 #include "PortfolioModel.mqh";
 
-class ForexPortfolioModel : public PortfolioModel
+class DirectionBasedPortfolioModel : public PortfolioModel
 {
    private:
       int P; // What is P??
@@ -34,7 +34,7 @@ class ForexPortfolioModel : public PortfolioModel
       }
 
    public:
-      ForexPortfolioModel(AlphaModel * alphaModel, RiskModel * riskModel, CostModel * costModel)
+      DirectionBasedPortfolioModel(AlphaModel * alphaModel, RiskModel * riskModel, CostModel * costModel)
          : PortfolioModel(alphaModel, riskModel, costModel)
       {
       }
