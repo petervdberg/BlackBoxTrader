@@ -1,9 +1,9 @@
 #include "BlackBoxTrader.mqh"
 #include "SmaAtrAlphaModel.mqh"
 #include "DefaultRiskModel.mqh"
-#include "NoCostModel.mqh"
+#include "DefaultCostModel.mqh"
 #include "DirectionBasedPortfolioModel.mqh"
-#include "ForexExecutionModel.mqh"
+#include "DefaultExecutionModel.mqh"
 
 BlackBoxTrader * trader;
 
@@ -11,9 +11,9 @@ void OnInit()
 {
    AlphaModel * alphaModel = new SmaAtrAlphaModel(10, 40, 20, 10);
    RiskModel * riskModel = new DefaultRiskModel(30, 30);
-   CostModel * costModel = new NoCostModel(3);
+   CostModel * costModel = new DefaultCostModel(3);
    PortfolioModel * portfolioModel = new DirectionBasedPortfolioModel(alphaModel, riskModel, costModel);
-   ExecutionModel * executionModel = new ForexExecutionModel();
+   ExecutionModel * executionModel = new DefaultExecutionModel();
    trader = new BlackBoxTrader(portfolioModel, executionModel);
 }
 

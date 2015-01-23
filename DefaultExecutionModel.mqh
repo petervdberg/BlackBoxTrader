@@ -1,6 +1,6 @@
 #include "ExecutionModel.mqh";
 
-class ForexExecutionModel : public ExecutionModel
+class DefaultExecutionModel : public ExecutionModel
 {
    private:
       int P;
@@ -22,7 +22,7 @@ class ForexExecutionModel : public ExecutionModel
       }
       
    public:
-      ForexExecutionModel()
+      DefaultExecutionModel()
       {
          if(Digits == 5 || Digits == 3 || Digits == 1)
          {

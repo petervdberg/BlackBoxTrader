@@ -1,12 +1,12 @@
 #include "CostModel.mqh";
 
-class NoCostModel : public CostModel
+class DefaultCostModel : public CostModel
 {
    private:
       int slippage;
       
    public:
-      NoCostModel(int slippage)
+      DefaultCostModel(int slippage)
       {
          this.slippage = slippage;
       }
