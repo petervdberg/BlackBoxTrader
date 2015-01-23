@@ -72,7 +72,7 @@ class DefaultRiskModel : public RiskModel
       
       double GetVolumeBasedOnRisk()
       {
-         double pipValueOfInstrument = MarketInfo(Symbol(), MODE_LOTSIZE);
+         double pipValueOfInstrument = MarketInfo(Symbol(), MODE_LOTSIZE) * MarketInfo(Symbol(),MODE_TICKVALUE);
          double stopLossInPips = stopLoss * P * Point;
          double result = risk * AccountBalance() / (stopLossInPips * pipValueOfInstrument);
          if(isYenPair) 
