@@ -23,11 +23,10 @@ class Portfolio
       static Portfolio * GetCurrent()
       {
          Portfolio * result = new Portfolio();
-         
          for (int i = 0; i < OrdersTotal(); i ++)
          {
             OrderSelect(i, SELECT_BY_POS, MODE_TRADES);
-            Trade * trade = new Trade(OrderSymbol(), OrderType(), OrderLots(), OrderTicket(), OrderStopLoss(), OrderTakeProfit(), 0, OrderOpenPrice());     
+            Trade * trade = new Trade(OrderSymbol(), OrderType(), OrderLots(), OrderOpenPrice(), OrderTicket(), OrderStopLoss(), OrderTakeProfit(), 0);     
             result.AddTrade(trade); 
          }
          
@@ -41,7 +40,7 @@ class Portfolio
          for (int i = 0; i < Size(); i ++)
          {
             Trade * trade = GetTrade(i);
-            Trade * resultTrade = new Trade(trade.GetSymbol(), trade.GetOperation(), trade.GetVolume(), trade.GetTicket(), trade.GetStopLoss(), trade.GetTakeProfit(), trade.GetSlippage(), trade.GetOpenPrice());
+            Trade * resultTrade = trade.Clone();
             result.AddTrade(resultTrade); 
          }
          

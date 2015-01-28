@@ -7,8 +7,14 @@ class DefaultExecutionModel : public ExecutionModel
       
       void OpenOrder(Trade * trade, double lotsNeeded)
       {
-         double openPrice = (trade.GetOperation() == OP_SELL ? Bid : Ask);
-         OrderSend(Symbol(), trade.GetOperation(), lotsNeeded, openPrice, trade.GetSlippage(), trade.GetStopLoss(), trade.GetTakeProfit());
+         int Ticket = OrderSend(Symbol(), trade.GetOperation(), lotsNeeded, trade.GetOpenPrice(), trade.GetSlippage(), trade.GetStopLoss(), trade.GetTakeProfit());
+         if(Ticket > 0)
+         {
+            if (!OrderSelect(Ticket, SELECT_BY_TICKET, MODE_TRADES))
+            {
+               Print("Error opening SELL order : ", GetLastError());
+            }
+         }
       }
 
       void ModifyOrder(Trade * trade)
@@ -52,7 +58,14 @@ class DefaultExecutionModel : public ExecutionModel
                }
                if(lotsNeeded > 0)
                {
-                  OpenOrder(newTrade, lotsNeeded);
+                  if (AccountFreeMargin() < lotsNeeded * (newTrade.GetOpenPrice() + (newTrade.GetSlippage() * P * Point)))
+                  {
+                     Print(i + ": " + AccountFreeMargin()+" < "+lotsNeeded+" * ("+newTrade.GetOpenPrice()+" + ("+newTrade.GetSlippage()+" * "+P+" * "+Point+"))");
+                  }
+                  else
+                  {
+                     OpenOrder(newTrade, lotsNeeded);
+                  }
                   continue;
                }
                if(newTrade.GetStopLoss() != currentTrade.GetStopLoss() || newTrade.GetTakeProfit() != currentTrade.GetTakeProfit())

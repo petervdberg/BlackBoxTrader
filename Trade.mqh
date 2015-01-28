@@ -11,16 +11,21 @@ class Trade
       int ticket;
 
    public:
-      Trade(string symbol, int operation, double volume, int ticket = 0, double stopLoss = 0.0, double takeProfit = 0.0, int slippage = 0, double openPrice = 0.0)
+      Trade(string symbol, int operation, double volume, double openPrice, int ticket = 0, double stopLoss = 0.0, double takeProfit = 0.0, int slippage = 0)
       {
          this.symbol = symbol;
          this.operation = operation;
          this.volume = volume;
+         this.openPrice = openPrice;
+         this.ticket = ticket;
          this.stopLoss = stopLoss;
          this.takeProfit = takeProfit;
          this.slippage = slippage;
-         this.openPrice = openPrice;
-         this.ticket = ticket;
+      }
+      
+      Trade * Clone()
+      {
+         return new Trade(GetSymbol(), GetOperation(), GetVolume(), GetOpenPrice(), GetTicket(), GetStopLoss(), GetTakeProfit(), GetSlippage());
       }
       
       string GetSymbol()

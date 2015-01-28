@@ -20,9 +20,14 @@ class SmaAtrAlphaModel : public AlphaModel
              && iMA(NULL, 0, longSmaPeriod, 0, MODE_SMA, PRICE_CLOSE, 1)  >= iMA(NULL, 0, shortSmaPeriod, 0, MODE_SMA, PRICE_CLOSE, 1);
       }
       
-      bool GrowingVolatility()
+      double VolatilityDifference()
       {
-         return iATR(NULL, 0, atrPeriod, 1) > iATR(NULL, 0, atrPeriod, 1 + shiftDistance);
+         double result = iATR(NULL, 0, atrPeriod, 1) - iATR(NULL, 0, atrPeriod, 1 + shiftDistance);
+         if(result < 0)
+         {
+            result = -1;
+         }
+         return result;
       }
 
    public:
@@ -36,20 +41,24 @@ class SmaAtrAlphaModel : public AlphaModel
       
       Forecast * CreateForecast()
       {
-         Direction direction;         
-         if(GrowingVolatility() && ShortCrossover())
+         Direction direction;   
+         double magnitude;      
+         if(ShortCrossover())
          {
             direction = dUP;
+            magnitude = VolatilityDifference();
          }
-         else if(GrowingVolatility() && LongCrossover())
+         else if(LongCrossover())
          {
             direction = dDOWN;
+            magnitude = VolatilityDifference();
          }
          else
          {
             direction = dNONE;
+            magnitude = -1;            
          }
          
-         return new Forecast(direction);
+         return new Forecast(direction, magnitude);
       }
 };

@@ -9,19 +9,22 @@ class DirectionBasedPortfolioModel : public PortfolioModel
       {
          Portfolio * newPortfolio;
          Forecast * forecast = alphaModel.CreateForecast();
+         int operation = (forecast.GetDirection() == dUP ? OP_BUY : OP_SELL);
+         int inverseOperation = (forecast.GetDirection() == dUP ? OP_SELL : OP_BUY);
          
-         if(forecast.GetDirection() == dUP || forecast.GetDirection() == dDOWN)
+         if(!currentPortfolio.HasTrade(Symbol(), operation) && forecast.GetDirection() != dNONE)
          {
             newPortfolio = new Portfolio();
-            Trade * newTrade; //No block scope..?
             Trade * currentTrade;
-            if(currentPortfolio.TryGetTrade(Symbol(), (forecast.GetDirection() == dUP ? OP_SELL : OP_BUY), currentTrade))
+            if(currentPortfolio.TryGetTrade(Symbol(), inverseOperation, currentTrade))
             {
-               newTrade = new Trade(currentTrade.GetSymbol(), currentTrade.GetOperation(), 0.0, currentTrade.GetTicket());
-               newPortfolio.AddTrade(newTrade);               
+               newPortfolio.AddTrade(new Trade(currentTrade.GetSymbol(), currentTrade.GetOperation(), 0.0, currentTrade.GetOpenPrice(), currentTrade.GetTicket()));               
             }
-            newTrade = new Trade(Symbol(), (forecast.GetDirection() == dUP ? OP_BUY : OP_SELL), 1.0);
-            newPortfolio.AddTrade(newTrade);
+            
+            if(forecast.GetMagnitude() > 0)
+            {
+               newPortfolio.AddTrade(new Trade(Symbol(), operation, 1.0, (forecast.GetDirection() == dUP ? Ask : Bid)));
+            }
          }
          else
          {

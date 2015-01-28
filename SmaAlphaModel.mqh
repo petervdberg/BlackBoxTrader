@@ -41,6 +41,6 @@ class SmaAlphaModel : public AlphaModel
             direction = dNONE;
          }
          
-         return new Forecast(direction);
+         return new Forecast(direction, 1);
       }
 };

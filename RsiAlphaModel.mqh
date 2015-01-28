@@ -8,12 +8,12 @@ class RsiAlphaModel : public AlphaModel
       
       bool RsiInUpperZone()
       {
-         return (iRSI(NULL,0,14,0,1) > upperThreshold && iRSI(NULL,0,14,0,2) <= upperThreshold);
+         return iRSI(NULL,0,5,0,1) > upperThreshold && iRSI(NULL,0,5,0,2) <= upperThreshold;
       }
       
       bool RsiInLowerZone()
       {
-         return (iRSI(NULL,0,14,0,1) < lowerLowerThreshold && iRSI(NULL,0,14,0,2) >= lowerLowerThreshold);
+         return iRSI(NULL,0,5,0,1) < lowerLowerThreshold && iRSI(NULL,0,5,0,2) >= lowerLowerThreshold;
       }
 
    public:
@@ -23,7 +23,7 @@ class RsiAlphaModel : public AlphaModel
          lowerLowerThreshold = 30;
       }
       
-      Forecast * ForecastMarket()
+      Forecast * CreateForecast()
       {
          Direction direction;
          if(RsiInUpperZone())
@@ -39,6 +39,6 @@ class RsiAlphaModel : public AlphaModel
             direction = dNONE;
          }
          
-         return new Forecast(direction);
+         return new Forecast(direction, 1);
       }
 };
